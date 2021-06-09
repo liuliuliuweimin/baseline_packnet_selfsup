@@ -1,0 +1,49 @@
+model:
+    name: 'SelfSupModel'
+    optimizer:
+        name: 'Adam'
+        depth:
+            lr: 0.00001
+        pose:
+            lr: 0.00001
+    scheduler:
+        name: 'StepLR'
+        step_size: 30
+        gamma: 0.5
+    depth_net:
+        name: 'PackNet01'
+        version: '1A'
+    pose_net:
+        name: 'PoseNet'
+        version: ''
+    params:
+        crop: ''
+        min_depth: 0.0
+        max_depth: 200.0
+datasets:
+    augmentation:
+        image_shape: (384, 640)
+    train:
+        batch_size: 4
+        num_workers: 8
+        dataset: ['NuScenes']
+        path: ['/public/MARS/datasets/nuScenes-SF/meta']
+        split: ['train']
+        depth_type: ['lidar']
+        cameras: [['CAM_FRONT']]
+        # 'CAM_FRONT','CAM_FRONT_RIGHT','CAM_BACK_RIGHT','CAM_BACK','CAM_BACK_LEFT','CAM_FRONT_LEFT'
+        repeat: [1]
+    validation:
+        num_workers: 8
+        dataset: ['NuScenes']
+        path: ['/public/MARS/datasets/nuScenes-SF/meta']
+        split: ['val']
+        depth_type: ['lidar']
+        cameras: [['CAM_FRONT']]
+    test:
+        num_workers: 8
+        dataset: ['NuScenes']
+        path: ['/public/MARS/datasets/nuScenes-SF/meta']
+        split: ['val']
+        depth_type: ['lidar']
+        cameras: [['CAM_FRONT']]
